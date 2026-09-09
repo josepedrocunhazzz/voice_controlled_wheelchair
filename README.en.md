@@ -106,4 +106,4 @@ For assistive control, aggregate accuracy can hide dangerous errors in less freq
 
 ## Academic context
 
-This university project demonstrates a data-science workflow, digital signal processing and machine learning. Deployment on physical hardware would require real-time safety constraints, fail-safe controls, extensive user testing and validation by assistive-technology specialists.
+Project presented in **José Cunha's** portfolio. It demonstrates a data-science workflow, digital signal processing and machine learning. Deployment on physical hardware would require real-time safety constraints, fail-safe controls, extensive user testing and validation by assistive-technology specialists.
