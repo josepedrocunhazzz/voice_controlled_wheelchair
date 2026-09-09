@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Python and Jupyter
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Local datasets and generated model artifacts
+dataset/
+*.pkl
+
+# Editors
+.idea/
+.vscode/
