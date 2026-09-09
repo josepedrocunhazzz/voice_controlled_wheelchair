@@ -106,4 +106,4 @@ Num cenário de controlo assistivo, a accuracy agregada pode esconder erros peri
 
 ## Contexto académico
 
-Projeto apresentado no portefólio de **José Cunha**. Demonstra um workflow de ciência de dados, processamento digital de sinal e machine learning. A utilização em hardware físico exigiria restrições de segurança em tempo real, mecanismos fail-safe, testes extensivos com utilizadores e validação por especialistas em tecnologia assistiva.
+Trabalho desenvolvido no âmbito académico de processamento digital de sinal e machine learning.
