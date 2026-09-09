@@ -1,79 +1,70 @@
-# Voice-Controlled Wheelchair
+# Cadeira de rodas controlada por voz
 
-Machine-learning prototype that recognizes spoken movement commands and uses
-them to control a wheelchair in an interactive simulation. The project covers
-the complete audio-classification pipeline: signal exploration, feature
-engineering, model selection, evaluation and a real-time microphone demo.
+[Português](README.md) | [English](README.en.md)
 
-> This is an academic software simulation. It is not certified or suitable for
-> controlling a real mobility device.
+Protótipo de machine learning que reconhece comandos de movimento falados e os utiliza para controlar uma cadeira de rodas numa simulação interativa. O projeto cobre o pipeline completo de classificação de áudio: exploração do sinal, engenharia de features, seleção de modelos, avaliação e demonstração em tempo real com microfone.
 
-## Supported commands
+> Esta é uma simulação académica de software. Não está certificada nem é adequada para controlar um dispositivo de mobilidade real.
 
-The classifier works with seven audio classes:
+## Comandos suportados
 
-| Audio class | Simulation action |
-| --- | --- |
-| `forward` | Move forward |
-| `backward` | Move backward |
-| `left` | Turn left |
-| `right` | Turn right |
-| `stop` | Stop movement |
-| `_silence_` | Ignore silence/background |
-| `_unknown_` | Reject unsupported words |
+| Classe de áudio | Ação na simulação |
+|---|---|
+| `forward` | Avançar |
+| `backward` | Recuar |
+| `left` | Virar à esquerda |
+| `right` | Virar à direita |
+| `stop` | Parar |
+| `_silence_` | Ignorar silêncio/ruído de fundo |
+| `_unknown_` | Rejeitar palavras não suportadas |
 
-## Project pipeline
+## Pipeline
 
 ```mermaid
 flowchart LR
-    A[WAV recordings] --> B[Cleaning and normalization]
-    B --> C[Audio feature extraction]
-    C --> D[Feature selection]
-    D --> E[KNN and MLP evaluation]
-    E --> F[Serialized model]
-    F --> G[Microphone inference]
-    G --> H[Pygame wheelchair simulation]
+    A[Gravações WAV] --> B[Limpeza e normalização]
+    B --> C[Extração de features de áudio]
+    C --> D[Seleção de features]
+    D --> E[Avaliação KNN e MLP]
+    E --> F[Modelo serializado]
+    F --> G[Inferência pelo microfone]
+    G --> H[Simulação Pygame]
 ```
 
-The notebook implements the following stages:
+O notebook implementa:
 
-1. Dataset inspection, class-distribution analysis and WAV normalization.
-2. Duration and amplitude analysis, with Z-score, IQR, K-Means and DBSCAN
-   approaches to outlier detection.
-3. Extraction of time-domain, frequency-domain, STFT, MFCC and wavelet
-   features.
-4. Statistical tests and feature selection with PCA, Fisher Score and ReliefF.
-5. Train/test, train/validation/test and stratified K-fold evaluation.
-6. Hyperparameter comparison for K-Nearest Neighbours and scikit-learn MLP.
-7. Implementation of a neural network and backpropagation from scratch for
-   learning purposes.
-8. Real-time inference from the microphone in a Pygame maze simulation.
+1. inspeção do dataset, distribuição das classes e normalização dos WAV;
+2. análise de duração/amplitude e deteção de outliers com Z-score, IQR, K-Means e DBSCAN;
+3. features temporais, espectrais, STFT, MFCC e wavelets;
+4. testes estatísticos e seleção com PCA, Fisher Score e ReliefF;
+5. avaliação train/test, train/validation/test e stratified K-fold;
+6. comparação de hiperparâmetros para KNN e MLP do scikit-learn;
+7. rede neuronal e backpropagation implementadas de raiz para aprendizagem;
+8. inferência do microfone em tempo real num labirinto Pygame.
 
-## Technologies
+## Tecnologias
 
-- Python and Jupyter Notebook
-- NumPy, pandas and SciPy
-- librosa and PyWavelets for audio/signal processing
-- scikit-learn for preprocessing, feature selection and classification
-- Matplotlib for exploratory analysis and evaluation
-- sounddevice for microphone input
-- Pygame for the interactive simulation
+- Python e Jupyter Notebook;
+- NumPy, pandas e SciPy;
+- librosa e PyWavelets para processamento de sinal;
+- scikit-learn para preparação, seleção de features e classificação;
+- Matplotlib para exploração e avaliação;
+- sounddevice para captura do microfone;
+- Pygame para a simulação interativa.
 
-## Repository structure
+## Estrutura
 
 ```text
 Voice_controlled_Wheelchair/
-├── project.ipynb      # Analysis, training, evaluation and simulation
-├── requirements.txt   # Python dependencies
-└── README.md
+├── project.ipynb      # análise, treino, avaliação e simulação
+├── requirements.txt   # dependências Python
+├── README.md
+└── README.en.md
 ```
 
-The audio dataset and generated model files are intentionally not included in
-this repository.
+O dataset de áudio e os modelos gerados não estão incluídos no repositório.
 
-## Local setup
-
-### 1. Create an environment
+## Executar localmente
 
 ```bash
 git clone https://github.com/josepedrocunhazzz/voice_controlled_wheelchair.git
@@ -84,18 +75,9 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-On Windows, activate the environment with:
+No Windows, ativar com `.venv\Scripts\activate`. O `sounddevice` pode exigir também a instalação de PortAudio no sistema operativo.
 
-```powershell
-.venv\Scripts\activate
-```
-
-`sounddevice` may also require PortAudio to be installed by the operating
-system.
-
-### 2. Prepare the dataset
-
-Place the WAV files in one directory per class:
+Colocar os ficheiros WAV num diretório por classe:
 
 ```text
 dataset/
@@ -108,43 +90,20 @@ dataset/
 └── _unknown_/
 ```
 
-The notebook currently contains the original author's absolute `dataset_path`
-in several cells. Replace every assignment to `dataset_path` with the path to
-your local dataset before running the analysis. The recordings are expected to
-be WAV files in a structure compatible with the one above.
-
-### 3. Run the notebook
+O notebook mantém o `dataset_path` absoluto do ambiente original em várias células. Substituir cada atribuição pelo caminho do dataset local e executar:
 
 ```bash
 jupyter lab project.ipynb
 ```
 
-Execute the cells in order. Training creates two local artifacts used by the
-real-time demo:
+O treino cria `mlp_combined_model.pkl` e `feature_statistics.pkl`, usados pela demo em tempo real. A simulação final requer sessão gráfica, permissão para o microfone e um dispositivo de entrada funcional.
 
-- `mlp_combined_model.pkl` — trained classifier;
-- `feature_statistics.pkl` — normalization statistics.
+## Notas de avaliação
 
-The final simulation requires a graphical session, microphone permission and
-a working input device.
+As experiências comparam F1 ponderado, accuracy, precision, recall e matrizes de confusão. KNN e o MLP do scikit-learn atingiram desempenho moderado. Um resultado bruto superior na rede implementada de raiz foi afetado pelo desbalanceamento e por previsões concentradas em poucas classes, pelo que não deve ser interpretado como o melhor modelo.
 
-## Evaluation notes
+Num cenário de controlo assistivo, a accuracy agregada pode esconder erros perigosos em comandos menos frequentes. Recall por classe, matrizes de confusão, latência e rejeição robusta de silêncio/palavras desconhecidas são medidas mais importantes para trabalho futuro.
 
-The notebook compares weighted F1, accuracy, precision, recall and confusion
-matrices. The recorded experiments reached moderate performance with KNN and
-the scikit-learn MLP. A higher raw score from the network implemented from
-scratch was affected by class imbalance and predictions concentrated in only a
-few classes, so it should not be interpreted as the best model.
+## Contexto académico
 
-This distinction is important for an assistive-control scenario: aggregate
-accuracy alone can hide dangerous errors in less frequent commands. Per-class
-recall, confusion matrices, latency and robust rejection of silence/unknown
-speech are the more relevant measures for future development.
-
-## Academic context
-
-This project was developed as university coursework to demonstrate knowledge
-of data-science workflows, digital signal processing and machine learning. The
-scope is a proof of concept and simulation; deployment on physical hardware
-would require real-time safety constraints, fail-safe controls, extensive user
-testing and validation by assistive-technology specialists.
+Projeto universitário que demonstra um workflow de ciência de dados, processamento digital de sinal e machine learning. A utilização em hardware físico exigiria restrições de segurança em tempo real, mecanismos fail-safe, testes extensivos com utilizadores e validação por especialistas em tecnologia assistiva.
